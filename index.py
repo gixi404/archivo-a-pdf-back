@@ -1,23 +1,9 @@
-from flask import Flask, request, send_file, jsonify
-from PIL import Image, UnidentifiedImageError
-from io import BytesIO
 import os
+from io import BytesIO
+from PIL import Image, UnidentifiedImageError
+from flask import Flask, request, send_file, jsonify
 
 app = Flask(__name__)
-
-
-def png_to_pdf(file_bytes: BytesIO) -> BytesIO | None:
-    try:
-        image = Image.open(file_bytes).convert("RGB")
-        output_pdf = BytesIO()
-        image.save(output_pdf, format="PDF")
-        output_pdf.seek(0)
-        return output_pdf
-    except UnidentifiedImageError as e:
-        print("Error indentificando la imagen: ", e)
-    except Exception as e:
-        print(f"Error inesperado: {e}")
-    return None
 
 
 @app.route("/", methods=["GET"])
@@ -46,6 +32,20 @@ def convert_png():
         as_attachment=True,
         download_name='output.pdf'
     )
+
+
+def png_to_pdf(file_bytes: BytesIO) -> BytesIO | None:
+    try:
+        image = Image.open(file_bytes).convert("RGB")
+        output_pdf = BytesIO()
+        image.save(output_pdf, format="PDF")
+        output_pdf.seek(0)
+        return output_pdf
+    except UnidentifiedImageError as e:
+        print("Error indentificando la imagen: ", e)
+    except Exception as e:
+        print(f"Error inesperado: {e}")
+    return None
 
 
 if __name__ == "__main__":
