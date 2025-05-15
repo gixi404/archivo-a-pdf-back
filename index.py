@@ -20,6 +20,11 @@ def png_to_pdf(file_bytes: BytesIO) -> BytesIO | None:
     return None
 
 
+@app.route("/", methods=["GET"])
+def index():
+    return jsonify({"message": "¡Bienvenido!"}), 200
+
+
 @app.route("/convert_png", methods=["POST"])
 def convert_png():
     if 'file' not in request.files:
