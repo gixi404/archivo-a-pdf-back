@@ -1,7 +1,8 @@
 import os
 from io import BytesIO
+import base64
 from PIL import Image, UnidentifiedImageError
-from flask import Flask, render_template, request, send_file, jsonify
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
@@ -26,12 +27,9 @@ def convert_png():
     if not pdf_io:
         return jsonify({"error": "Error al convertir el archivo"}), 500
 
-    return send_file(
-        pdf_io,
-        mimetype='application/pdf',
-        as_attachment=True,
-        download_name='output.pdf'
-    )
+    pdf_base64 = base64.b64encode(pdf_io.getvalue()).decode('utf-8')
+
+    return jsonify({"file": pdf_base64})
 
 
 def png_to_pdf(file_bytes: BytesIO) -> BytesIO | None:
