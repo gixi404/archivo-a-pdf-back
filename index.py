@@ -1,14 +1,14 @@
 import os
 from io import BytesIO
 from PIL import Image, UnidentifiedImageError
-from flask import Flask, request, send_file, jsonify
+from flask import Flask, render_template, request, send_file, jsonify
 
 app = Flask(__name__)
 
 
 @app.route("/", methods=["GET"])
 def index():
-    return jsonify({"message": "¡Bienvenido!"}), 200
+    return render_template("index.html")
 
 
 @app.route("/convert_png", methods=["POST"])
