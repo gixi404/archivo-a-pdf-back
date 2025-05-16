@@ -1,4 +1,5 @@
-Flask
-Pillow
-requests
+flask
 flask-cors
+Pillow
+python-docx
+reportlab
