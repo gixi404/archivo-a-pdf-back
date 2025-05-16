@@ -6,10 +6,10 @@ from PIL import Image, UnidentifiedImageError
 from docx import Document
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
-from const import LOCALHOST, BACK_URL
+from const import LOCALHOST, BACK_URL, DOMAIN
 
 app = Flask(__name__)
-CORS(app, origins=[LOCALHOST, BACK_URL], methods=["POST"])
+CORS(app, origins=[LOCALHOST, BACK_URL, DOMAIN], methods=["POST"])
 
 
 @app.route("/", methods=["GET"])
